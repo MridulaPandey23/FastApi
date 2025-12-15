@@ -2,24 +2,24 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-Static_db = {"name1": "ABC", "age1": 30, "gender1": "male"}
+Static_db = [{'id': 1, 'name': 'Alice', 'age': 30, 'gender': 'Female'},
+             {'id': 2, 'name': 'Bob', 'age': 25, 'gender': 'Male'}
+]
 
-
-@app.post("/name,age,gender")
+@app.post("/")
 def add_details(name: str, age: int, gender: str):
-    Static_db['name2'] = name
-    Static_db['age2'] = age
-    Static_db['gender2'] = gender
+   newId = len(Static_db) + 1
+   Static_db.append({'id': newId, 'name': name, 'age': age, 'gender': gender})
+   return Static_db
+
+@app.put("/")
+def update_details(id: int, name: str, age: int, gender: str):
+    Static_db[id] = {'id': id, 'name': name, 'age': age, 'gender': gender}
     return Static_db
 
-@app.put("/name,age,gender")
-def update_details(name: str):
-    Static_db['name1'] = name
-    return Static_db
-
-@app.delete("/gender")
-def delete_details():
-    del Static_db['gender1']
+@app.delete("/")
+def delete_details(id: int):
+    del Static_db[id]
     return Static_db
 
 @app.get("/")
