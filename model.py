@@ -10,3 +10,4 @@ class User(Base):
     name = Column(String)
     age = Column(Integer)
     gender = Column(String)
+    email = Column(String, unique=True, index=True)
